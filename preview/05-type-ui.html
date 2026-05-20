@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Type — UI / body</title>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #f6f4ef; color: var(--ink); }
+  body { padding: 22px 26px; font-family: var(--font-mono); }
+  .spec {
+    display: flex; gap: 24px; align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(17,17,17,0.18);
+  }
+  .spec:last-child { border-bottom: 0; }
+  .sample { font-family: var(--font-ui); line-height: 1; color: var(--ink); flex: 1; font-weight: 400; }
+  .meta {
+    width: 200px;
+    font-family: var(--font-mono); font-size: 14px;
+    opacity: 0.7; line-height: 1.2; text-align: right;
+  }
+  .meta b { display: block; color: var(--ink); opacity: 1; }
+</style>
+</head>
+<body>
+  <div class="spec">
+    <div class="sample" style="font-size: 22px;">Friends</div>
+    <div class="meta"><b>ui / 22px</b>Pixelify Sans — menu rows</div>
+  </div>
+  <div class="spec">
+    <div class="sample" style="font-size: 18px;">My profile</div>
+    <div class="meta"><b>ui / 18px</b>menu rows (unselected)</div>
+  </div>
+  <div class="spec">
+    <div class="sample" style="font-size: 14px;">Specise:Cat</div>
+    <div class="meta"><b>ui / 14px</b>profile label / value</div>
+  </div>
+</body>
+</html>

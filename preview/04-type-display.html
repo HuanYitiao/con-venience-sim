@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Type — display</title>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #f6f4ef; color: var(--ink); }
+  body { padding: 22px 26px; font-family: var(--font-mono); }
+  .spec {
+    display: flex; gap: 24px; align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(17,17,17,0.18);
+  }
+  .spec:last-child { border-bottom: 0; }
+  .sample { font-family: var(--font-display); line-height: 1; color: var(--ink); flex: 1; }
+  .meta {
+    width: 200px;
+    font-family: var(--font-mono); font-size: 14px;
+    opacity: 0.7; line-height: 1.2;
+    text-align: right;
+  }
+  .meta b { display: block; color: var(--ink); opacity: 1; }
+</style>
+</head>
+<body>
+  <div class="spec">
+    <div class="sample" style="font-size: 36px;">Bob</div>
+    <div class="meta"><b>display / 32px</b>Silkscreen — usernames</div>
+  </div>
+  <div class="spec">
+    <div class="sample" style="font-size: 26px;">Alice</div>
+    <div class="meta"><b>display / 24px</b>friend-profile name</div>
+  </div>
+  <div class="spec">
+    <div class="sample" style="font-size: 18px;">con-venience</div>
+    <div class="meta"><b>display / 16px</b>wordmark, headers</div>
+  </div>
+</body>
+</html>

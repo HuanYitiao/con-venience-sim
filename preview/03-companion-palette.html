@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Companion palette</title>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #f6f4ef; font-family: var(--font-mono); color: var(--ink); }
+  body { padding: 20px 24px; }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .swatch {
+    border: 1px solid var(--ink);
+    overflow: hidden;
+  }
+  .chip { height: 70px; }
+  .meta {
+    background: #fff;
+    padding: 8px 10px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    line-height: 1;
+  }
+  .meta .hex { opacity: 0.55; }
+  .caption {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.2;
+    opacity: 0.65;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="swatch">
+      <div class="chip" style="background: var(--chassis);"></div>
+      <div class="meta"><span>chassis</span><span class="hex">#1c1c1c</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background: var(--strap);"></div>
+      <div class="meta"><span>strap</span><span class="hex">#6e5f4d</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background: var(--led-amber);"></div>
+      <div class="meta"><span>led-amber</span><span class="hex">#f1b24a</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background: var(--led-mint);"></div>
+      <div class="meta"><span>led-mint</span><span class="hex">#7fd4a8</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background: var(--warning);"></div>
+      <div class="meta"><span>warning</span><span class="hex">#c84a3a</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background: var(--link);"></div>
+      <div class="meta"><span>link</span><span class="hex">#2f4dad</span></div>
+    </div>
+  </div>
+  <div class="caption">off-device only — never inside the 296×128 e-ink frame.</div>
+</body>
+</html>

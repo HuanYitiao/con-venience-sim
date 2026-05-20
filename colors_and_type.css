@@ -1,0 +1,152 @@
+/* ============================================================
+   con-venience Design System — Colors & Type
+   ============================================================
+   The visual system is built around a single physical constraint:
+   a 2.9" Waveshare e-ink display, 296×128px, 1-bit black & white.
+   Every token below either matches a pixel the device can render,
+   or describes off-device surfaces (web, packaging, docs) that
+   should still feel of-a-piece with the on-device experience.
+   ============================================================ */
+
+/* ---------- 1-bit color tokens (the only colors on-device) ---------- */
+:root {
+  /* True ink. Used for type, icons, selection bars, frames. */
+  --ink:               #111111;
+
+  /* "Paper" — the e-ink background. Real Waveshare panels read as a
+     slightly cool light grey, never pure white. Mockups in the repo use
+     this same tone, so the simulator matches.                          */
+  --paper:             #c4c4c4;
+
+  /* A subtle elevation step for the simulator chassis / page chrome. */
+  --paper-hi:          #d4d4d2;
+  --paper-lo:          #a8a8a6;
+
+  /* Dither tints — only for off-device gradients and decorative
+     halftone fills. On-device we render dither as a CSS pattern.       */
+  --dither-25:         repeating-conic-gradient(var(--ink) 0% 25%, transparent 0% 50%) 50% / 4px 4px;
+  --dither-50:         repeating-conic-gradient(var(--ink) 0% 25%, transparent 0% 50%) 50% / 2px 2px;
+  --dither-75:         repeating-conic-gradient(var(--ink) 0% 75%, transparent 0% 100%) 50% / 2px 2px;
+
+  /* Selection / focus — inverts a row. */
+  --selection-bg:      var(--ink);
+  --selection-fg:      var(--paper);
+}
+
+/* ---------- Off-device companion palette ---------- */
+/* Used in: docs site, README rendering, packaging, web companion app.
+   Stays low-chroma to feel adjacent to the e-ink panel.                */
+:root {
+  --chassis:           #1c1c1c;   /* device shell, dark UI surfaces  */
+  --chassis-edge:      #2a2a2a;
+  --led-amber:         #f1b24a;   /* "paired" status LED            */
+  --led-mint:          #7fd4a8;   /* "connected" status LED         */
+  --strap:             #6e5f4d;   /* leather/strap accent           */
+  --warning:           #c84a3a;   /* low battery / pairing failed   */
+  --link:              #2f4dad;   /* hyperlinks in docs only        */
+}
+
+/* ---------- Type stack ----------
+   The on-device firmware uses u8g2 bitmap fonts (logisoso, inb16_mr,
+   profont, etc.). For web/simulator we substitute the closest free
+   pixel fonts from Google Fonts. FLAG: these are best-effort matches,
+   not pixel-perfect to u8g2 — replace with extracted bitmap glyphs
+   when fidelity matters.                                              */
+:root {
+  /* Display: blocky, all-caps friendly. Used for usernames + headers. */
+  --font-display:      "Silkscreen", "Press Start 2P", monospace;
+
+  /* UI body: readable pixel font for menus, profiles, paragraphs.     */
+  --font-ui:           "Pixelify Sans", "VT323", monospace;
+
+  /* Mono: when we need a hint of code (firmware logs, hex dumps).     */
+  --font-mono:         "VT323", "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* ---------- On-device type ramp ----------
+   Sizes here are quoted in CSS px scaled to 1× device pixels. The
+   simulator scales the canvas to taste, so these stay small.          */
+:root {
+  --type-xs:           8px;     /* labels, status pills                */
+  --type-sm:           10px;    /* menu rows                           */
+  --type-md:           12px;    /* profile body                        */
+  --type-lg:           16px;    /* usernames                           */
+  --type-xl:           24px;    /* friend-profile name                 */
+  --type-xxl:          32px;    /* "Bob" on the user-profile page      */
+
+  --line-tight:        1.0;     /* pixel fonts use 1.0; never auto     */
+  --line-default:      1.2;
+}
+
+/* ---------- Semantic text rules ---------- */
+.cv-h1 {
+  font-family: var(--font-display);
+  font-size: var(--type-xxl);
+  line-height: var(--line-tight);
+  color: var(--ink);
+  letter-spacing: 0;
+}
+.cv-h2 {
+  font-family: var(--font-display);
+  font-size: var(--type-xl);
+  line-height: var(--line-tight);
+  color: var(--ink);
+}
+.cv-label {
+  font-family: var(--font-ui);
+  font-size: var(--type-md);
+  line-height: var(--line-default);
+  color: var(--ink);
+}
+.cv-row {
+  font-family: var(--font-ui);
+  font-size: var(--type-lg);
+  line-height: var(--line-tight);
+  color: var(--ink);
+}
+.cv-row--selected {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+.cv-mono {
+  font-family: var(--font-mono);
+  font-size: var(--type-md);
+  color: var(--ink);
+}
+
+/* ---------- Spacing & radii ----------
+   Pixel art has no soft anything. Radii are 0 on-device, and on chassis
+   surfaces we use a generous device-like curve.                        */
+:root {
+  --space-1:           2px;
+  --space-2:           4px;
+  --space-3:           8px;
+  --space-4:           12px;
+  --space-5:           16px;
+  --space-6:           24px;
+  --space-7:           32px;
+
+  --radius-0:          0;        /* default on-screen */
+  --radius-chassis:    18px;     /* device body */
+  --radius-screen:     6px;      /* e-ink bezel cut-out */
+}
+
+/* ---------- Pixel rendering hygiene ---------- */
+.cv-pixel,
+.cv-pixel * {
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  text-rendering: geometricPrecision;
+}
+
+/* ---------- E-ink canvas helper ---------- */
+.cv-screen {
+  background: var(--paper);
+  color: var(--ink);
+  aspect-ratio: 296 / 128;
+  font-family: var(--font-ui);
+  image-rendering: pixelated;
+  position: relative;
+  overflow: hidden;
+}

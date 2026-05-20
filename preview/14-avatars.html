@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Avatars — 1-bit dithered</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #f6f4ef; }
+  body { padding: 18px 24px; font-family: var(--font-mono); color: var(--ink); }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; align-items: end; }
+  .av-cell { text-align: center; }
+  .av {
+    width: 100%; aspect-ratio: 1 / 1;
+    background: var(--paper);
+    image-rendering: pixelated;
+    border: 1px solid var(--ink);
+    object-fit: contain;
+    object-position: center;
+  }
+  .label { font-size: 14px; margin-top: 6px; opacity: 0.7; line-height: 1; }
+  .label b { color: var(--ink); opacity: 1; display: block; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="av-cell">
+      <img class="av" src="../assets/avatar-bob.png" alt="">
+      <div class="label"><b>Bob</b>self avatar</div>
+    </div>
+    <div class="av-cell">
+      <img class="av" src="../assets/screens/friends_sortment.png" alt="" style="object-fit:none;object-position:14% 35%;width:100%;">
+      <div class="label"><b>Con</b>diamond + paw</div>
+    </div>
+    <div class="av-cell">
+      <img class="av" src="../assets/screens/friends_sortment.png" alt="" style="object-fit:none;object-position:22% 80%;width:100%;">
+      <div class="label"><b>Wolf</b>species crest</div>
+    </div>
+    <div class="av-cell">
+      <div class="av" style="background-image: radial-gradient(#111 0.8px, transparent 1.1px); background-size: 4px 4px;"></div>
+      <div class="label"><b>Dither</b>50% halftone</div>
+    </div>
+  </div>
+</body>
+</html>

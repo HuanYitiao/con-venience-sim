@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Colors — Ink &amp; Paper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Pixelify+Sans:wght@400..700&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #f6f4ef; }
+  body {
+    font-family: var(--font-ui);
+    padding: 20px 24px;
+    color: var(--ink);
+  }
+  .row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .swatch {
+    border: 1px solid var(--ink);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .swatch .chip { height: 70px; }
+  .swatch .meta {
+    padding: 8px 10px;
+    background: #fff;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    line-height: 1;
+  }
+  .swatch .meta b { font-weight: 400; }
+  .swatch .meta .hex { opacity: 0.6; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="swatch">
+      <div class="chip" style="background: var(--ink);"></div>
+      <div class="meta"><b>ink</b><span class="hex">#111111</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background: var(--paper);"></div>
+      <div class="meta"><b>paper</b><span class="hex">#c4c4c4</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background: var(--paper-hi);"></div>
+      <div class="meta"><b>paper-hi</b><span class="hex">#d4d4d2</span></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background: var(--paper-lo);"></div>
+      <div class="meta"><b>paper-lo</b><span class="hex">#a8a8a6</span></div>
+    </div>
+  </div>
+</body>
+</html>

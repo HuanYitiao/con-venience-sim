@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Selection row</title>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: var(--paper); }
+  body { padding: 18px 24px; font-family: var(--font-ui); color: var(--ink); }
+  .menu { display: flex; flex-direction: column; }
+  .row {
+    font-family: var(--font-ui);
+    font-size: 26px;
+    line-height: 1;
+    padding: 4px 10px;
+  }
+  .row--selected {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .caption {
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    opacity: 0.65;
+    line-height: 1.2;
+  }
+</style>
+</head>
+<body>
+  <div class="menu">
+    <div class="row row--selected">Friends</div>
+    <div class="row">My profile</div>
+    <div class="row">Pair</div>
+  </div>
+  <div class="caption">selection = solid ink fill, paper text · no padding bleed · no border</div>
+</body>
+</html>

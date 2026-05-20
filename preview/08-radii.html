@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Radii</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #f6f4ef; color: var(--ink); font-family: var(--font-mono); }
+  body { padding: 20px; }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 8px;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .card.r0 { border-radius: 0; }
+  .card.rs { border-radius: 6px; }
+  .card.rc { border-radius: 18px; background: var(--chassis); color: var(--paper); }
+  .label { display: block; text-align: center; margin-top: 4px; font-size: 14px; opacity: 0.6; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div>
+      <div class="card r0">0</div>
+      <div class="label">radius-0 — on-device</div>
+    </div>
+    <div>
+      <div class="card rs">6</div>
+      <div class="label">radius-screen — bezel cutout</div>
+    </div>
+    <div>
+      <div class="card rc">18</div>
+      <div class="label">radius-chassis — device body</div>
+    </div>
+  </div>
+</body>
+</html>

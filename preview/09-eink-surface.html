@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>E-ink screen surface</title>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=Pixelify+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #f6f4ef; }
+  body { padding: 18px 24px; font-family: var(--font-mono); color: var(--ink); }
+  .device {
+    background: var(--chassis);
+    border-radius: 18px;
+    padding: 14px;
+    width: 460px;
+    box-shadow: 0 2px 0 #000;
+  }
+  .screen {
+    width: 432px;
+    height: 188px; /* 296:128 ratio at ~1.46x */
+    background: var(--paper);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    image-rendering: pixelated;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    color: var(--ink);
+    font-size: 38px;
+    line-height: 1;
+  }
+  .dim {
+    margin-top: 10px;
+    font-family: var(--font-mono); font-size: 14px;
+    opacity: 0.65; line-height: 1;
+  }
+  .dim b { color: var(--ink); opacity: 1; }
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="screen">con-venience</div>
+  </div>
+  <div class="dim"><b>296 × 128 px</b> · 2.9" Waveshare e-ink · 1-bit B&amp;W</div>
+</body>
+</html>

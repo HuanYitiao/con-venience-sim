@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dither halftones</title>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #f6f4ef; font-family: var(--font-mono); color: var(--ink); }
+  body { padding: 20px; }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .tile {
+    border: 1px solid var(--ink);
+    aspect-ratio: 1 / 1;
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+    image-rendering: pixelated;
+  }
+  .tile .fill {
+    position: absolute; inset: 0;
+    background-image: var(--p);
+    background-size: var(--bg, 4px 4px);
+    image-rendering: pixelated;
+  }
+  .label {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-align: center;
+    line-height: 1;
+  }
+  .pct { opacity: 0.55; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div>
+      <div class="tile">
+        <div class="fill" style="--p:radial-gradient(#111 1px, transparent 1.2px); --bg:4px 4px;"></div>
+      </div>
+      <div class="label">dither <span class="pct">25%</span></div>
+    </div>
+    <div>
+      <div class="tile">
+        <div class="fill" style="--p:repeating-conic-gradient(#111 0% 25%, transparent 0% 50%); --bg:4px 4px;"></div>
+      </div>
+      <div class="label">dither <span class="pct">50%</span></div>
+    </div>
+    <div>
+      <div class="tile">
+        <div class="fill" style="--p:radial-gradient(#c4c4c4 0.8px, #111 1.1px); --bg:4px 4px;"></div>
+      </div>
+      <div class="label">dither <span class="pct">75%</span></div>
+    </div>
+    <div>
+      <div class="tile" style="background: var(--ink);"></div>
+      <div class="label">solid <span class="pct">100%</span></div>
+    </div>
+  </div>
+</body>
+</html>

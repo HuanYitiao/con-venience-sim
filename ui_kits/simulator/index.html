@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>con-venience simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Pixelify+Sans:wght@400..700&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 50% -10%, #2a2825, #1a1816 60%, #100f0d 100%);
+    color: #c4c4c4;
+    font-family: var(--font-mono);
+    overflow-x: hidden;
+  }
+  .stage {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px 60px;
+    gap: 28px;
+  }
+  .topbar {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    width: 100%;
+    max-width: 980px;
+  }
+  .topbar .mark {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: #f6f4ef;
+    letter-spacing: -1px;
+  }
+  .topbar .tag {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: #c4c4c4;
+    opacity: 0.55;
+  }
+  .topbar .spacer { flex: 1; }
+  .topbar .hint {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: #c4c4c4;
+    opacity: 0.45;
+  }
+  .topbar .hint kbd {
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: inherit;
+    color: #f1b24a;
+  }
+  /* Disable text selection on chassis controls */
+  * { user-select: none; -webkit-user-select: none; }
+  #root { width: 100%; display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <rect width="200" height="200" fill="#1a1816"/>
+    <rect x="30" y="60" width="140" height="80" rx="10" fill="#222"/>
+    <rect x="40" y="70" width="120" height="60" rx="3" fill="#c4c4c4"/>
+    <text x="100" y="106" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#111">cv</text>
+    <rect x="168" y="92" width="6" height="16" fill="#444"/>
+  </svg>
+</template>
+<div class="stage">
+  <div class="topbar">
+    <div class="mark">con-venience</div>
+    <div class="tag">simulator</div>
+    <div class="spacer"></div>
+    <div class="hint">click the button or hit <kbd>space</kbd> &nbsp;·&nbsp; hold &gt; 300 ms for long press</div>
+  </div>
+  <div id="root"></div>
+</div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="data.js"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="pages.jsx"></script>
+<script type="text/babel" src="simulator.jsx"></script>
+</body>
+</html>
