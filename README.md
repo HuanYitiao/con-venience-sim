@@ -24,9 +24,8 @@ point in time and may drift.
     296×128 1-bit canvas)
   - `ui/ui_logic.svg` — page state machine sketch
   - `tools/convert.py` — Floyd–Steinberg dither for avatars and QR codes
-- **Simulator (target deliverable)** → https://github.com/HuanYitiao/con-venience-sim
-  - Empty / private at the time of writing. The `ui_kits/simulator/` folder
-    in *this* design system is the closest thing to a working spec.
+- **Simulator + this design system** → https://github.com/HuanYitiao/con-venience-sim
+  - You're looking at it.
 
 If you have access, **read both before designing**. This system is a digest —
 the firmware page state machine, button timings, and storage schema all live

@@ -19,9 +19,7 @@
 const { useState, useEffect, useRef, useCallback } = React;
 
 const LONG_PRESS_MS = 300;
-const DEFAULT_TWEAKS = /*EDITMODE-BEGIN*/{
-  "variant": "dpad"
-}/*EDITMODE-END*/;
+const DEFAULT_TWEAKS = /*EDITMODE-BEGIN*/{}/*EDITMODE-END*/;
 
 // -------------------- state reducer -------------------------
 const MENU_TARGETS = ['friends_list', 'my_profile', 'pairing', 'connect'];
@@ -33,35 +31,34 @@ function reduce(state, intent) {
   if (intent === 'intent_pair') {
     return { ...state, page: 'pairing', cursor: 0 };
   }
-  // intent_qr from anywhere returns to QR card
+  // intent_qr from anywhere returns home (home now shows the QR)
   if (intent === 'intent_qr') {
-    return { ...state, page: 'qr', cursor: 0 };
+    return { ...state, page: 'home', cursor: 0 };
+  }
+  // ACOM contact simulated — show success then auto-return to home
+  if (intent === 'intent_acom_success') {
+    // pick a random contact as the "newly added" friend
+    const newIdx = Math.floor(Math.random() * CV_DATA.CONTACTS.length);
+    return { ...state, page: 'pairing_success', contactIdx: newIdx };
   }
 
   switch (page) {
-    case 'homepage':
-      if (intent === 'intent_select')  return { ...state, page: 'menu',  cursor: 0 };
-      if (intent === 'intent_next')    return { ...state, page: 'qr' };
-      if (intent === 'intent_prev')    return { ...state, page: 'qr' };
-      return state;
-
-    case 'qr':
-      if (intent === 'intent_select')  return { ...state, page: 'menu',  cursor: 0 };
-      if (intent === 'intent_back')    return { ...state, page: 'homepage' };
+    case 'home':
+      if (intent === 'intent_select')  return { ...state, page: 'friends_list', cursor: 0 };
+      if (intent === 'intent_next')    return { ...state, page: 'friends_list', cursor: 0 };
+      if (intent === 'intent_prev')    return { ...state, page: 'friends_list', cursor: 0 };
       return state;
 
     case 'menu':
-      if (intent === 'intent_next')    return { ...state, cursor: (cursor + 1) % MENU_TARGETS.length };
-      if (intent === 'intent_prev')    return { ...state, cursor: (cursor - 1 + MENU_TARGETS.length) % MENU_TARGETS.length };
-      if (intent === 'intent_select')  return { ...state, page: MENU_TARGETS[cursor], cursor: 0 };
-      if (intent === 'intent_back')    return { ...state, page: 'homepage', cursor: 0 };
+      // kept for legacy/dev-panel jump only
+      if (intent === 'intent_back')    return { ...state, page: 'home', cursor: 0 };
       return state;
 
     case 'friends_list':
       if (intent === 'intent_next')    return { ...state, cursor: (cursor + 1) % CV_DATA.CONTACTS.length, contactIdx: (cursor + 1) % CV_DATA.CONTACTS.length };
       if (intent === 'intent_prev')    return { ...state, cursor: (cursor - 1 + CV_DATA.CONTACTS.length) % CV_DATA.CONTACTS.length, contactIdx: (cursor - 1 + CV_DATA.CONTACTS.length) % CV_DATA.CONTACTS.length };
       if (intent === 'intent_select')  return { ...state, page: 'friend_profile', contactIdx: cursor };
-      if (intent === 'intent_back')    return { ...state, page: 'menu', cursor: 0 };
+      if (intent === 'intent_back')    return { ...state, page: 'home', cursor: 0 };
       return state;
 
     case 'friend_profile':
@@ -69,15 +66,24 @@ function reduce(state, intent) {
       return state;
 
     case 'my_profile':
-      if (intent === 'intent_back' || intent === 'intent_select') return { ...state, page: 'menu', cursor: 0 };
+      if (intent === 'intent_back' || intent === 'intent_select') return { ...state, page: 'home', cursor: 0 };
       return state;
 
     case 'pairing':
-      if (intent === 'intent_back' || intent === 'intent_select') return { ...state, page: 'homepage', cursor: 0 };
+      if (intent === 'intent_select')  return reduce(state, 'intent_acom_success');
+      if (intent === 'intent_back')    return { ...state, page: 'home', cursor: 0 };
+      return state;
+
+    case 'pairing_success':
+      if (intent === 'intent_back' || intent === 'intent_select') return { ...state, page: 'home', cursor: 0 };
       return state;
 
     case 'connect':
-      if (intent === 'intent_back' || intent === 'intent_select') return { ...state, page: 'menu', cursor: 0 };
+      if (intent === 'intent_back' || intent === 'intent_select') return { ...state, page: 'home', cursor: 0 };
+      return state;
+
+    case 'low_battery':
+      if (intent === 'intent_back' || intent === 'intent_select') return { ...state, page: 'home', cursor: 0 };
       return state;
 
     default:
@@ -86,17 +92,18 @@ function reduce(state, intent) {
 }
 
 // -------------------- page router ---------------------------
-function PageRouter({ page, cursor, contactIdx }) {
+function PageRouter({ page, cursor, contactIdx, fire }) {
   switch (page) {
-    case 'homepage':       return <HomepagePage />;
-    case 'qr':             return <QRPage />;
+    case 'home':           return <HomePage />;
     case 'menu':           return <MenuPage cursor={cursor} />;
     case 'friends_list':   return <FriendsListPage cursor={cursor} />;
     case 'friend_profile': return <FriendProfilePage contact={CV_DATA.CONTACTS[contactIdx]} />;
     case 'my_profile':     return <MyProfilePage />;
-    case 'pairing':        return <PairingPage />;
+    case 'pairing':        return <PairingPage onAcomReceived={() => fire('intent_acom_success')} />;
+    case 'pairing_success':return <PairingSuccessPage contact={CV_DATA.CONTACTS[contactIdx]} onDone={() => fire('intent_back')} />;
     case 'connect':        return <ConnectPage />;
-    default:               return <HomepagePage />;
+    case 'low_battery':    return <LowBatteryPage />;
+    default:               return <HomePage />;
   }
 }
 
@@ -304,11 +311,9 @@ function Chassis({ children, variant, onIntent, onBigShort, onBigLong }) {
         gap: 18,
       }}
     >
-      {/* LEFT — variant-specific fine input */}
+      {/* LEFT — D-pad input */}
       <div style={{ alignSelf: 'center' }}>
-        {variant === 'dpad'
-          ? <DPadInput onIntent={onIntent} />
-          : <CrownInput onIntent={onIntent} />}
+        <DPadInput onIntent={onIntent} />
       </div>
 
       {/* CENTER — screen */}
@@ -336,7 +341,7 @@ function Chassis({ children, variant, onIntent, onBigShort, onBigLong }) {
 // =================== APP ====================================
 function App() {
   const [tweaks, setTweak] = useTweaks(DEFAULT_TWEAKS);
-  const [state, setState] = useState({ page: 'homepage', cursor: 0, contactIdx: 0 });
+  const [state, setState] = useState({ page: 'home', cursor: 0, contactIdx: 0 });
 
   const fire = useCallback((intent) => {
     setState(s => reduce(s, intent));
@@ -372,7 +377,6 @@ function App() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 40, flexWrap: 'wrap', justifyContent: 'center' }}>
       <Chassis
-        variant={tweaks.variant}
         onIntent={fire}
         onBigShort={onBigShort}
         onBigLong={onBigLong}
@@ -389,27 +393,13 @@ function App() {
           }}
         >
           <div style={{ position: 'absolute', width: 296, height: 128, transformOrigin: '0 0', transform: 'scale(2)', imageRendering: 'pixelated' }}>
-            <PageRouter page={state.page} cursor={state.cursor} contactIdx={state.contactIdx} />
+            <PageRouter page={state.page} cursor={state.cursor} contactIdx={state.contactIdx} fire={fire} />
             {ghosting && <div style={{ position: 'absolute', inset: 0, background: 'rgba(196,196,196,0.55)', pointerEvents: 'none' }} />}
           </div>
         </div>
       </Chassis>
 
-      <DevPanel state={state} variant={tweaks.variant} fire={fire} onJump={(p) => setState({ page: p, cursor: 0, contactIdx: 0 })} setVariant={(v) => setTweak('variant', v)} />
-
-      <TweaksPanel title="Tweaks">
-        <TweakSection label="Input scheme">
-          <TweakRadio
-            label="Controls"
-            value={tweaks.variant}
-            onChange={(v) => setTweak('variant', v)}
-            options={[
-              { value: 'dpad',  label: 'D-pad + OK' },
-              { value: 'crown', label: 'Crown' },
-            ]}
-          />
-        </TweakSection>
-      </TweaksPanel>
+      <DevPanel state={state} fire={fire} onJump={(p) => setState({ page: p, cursor: 0, contactIdx: 0 })} />
     </div>
   );
 }
@@ -426,10 +416,10 @@ function useGhostRefresh(deps) {
 }
 
 // -------------------- DEV panel ----------------------------
-const PAGES = ['homepage', 'qr', 'menu', 'friends_list', 'friend_profile', 'my_profile', 'pairing', 'connect'];
-const PAGE_LABEL = { homepage: 'home', qr: 'qr', menu: 'menu', friends_list: 'friends', friend_profile: 'profile', my_profile: 'me', pairing: 'pair', connect: 'pc' };
+const PAGES = ['home', 'friends_list', 'friend_profile', 'pairing', 'pairing_success', 'connect', 'low_battery'];
+const PAGE_LABEL = { home: 'home', friends_list: 'friends', friend_profile: 'profile', pairing: 'pair', pairing_success: 'pair✓', connect: 'pc', low_battery: 'low bat' };
 
-function DevPanel({ state, variant, fire, onJump, setVariant }) {
+function DevPanel({ state, fire, onJump }) {
   const btn = (extra = {}) => ({
     display: 'inline-block', margin: '2px 4px 2px 0',
     padding: '3px 8px', background: '#2a2a2a', color: '#c4c4c4',
@@ -440,12 +430,6 @@ function DevPanel({ state, variant, fire, onJump, setVariant }) {
   return (
     <div style={{ width: 260, background: '#1a1a1a', color: '#c4c4c4', padding: 14, borderRadius: 10, fontFamily: 'var(--font-mono)', fontSize: 13, boxShadow: '0 6px 0 #000' }}>
       <div style={{ fontFamily: 'var(--font-display)', fontSize: 14, marginBottom: 10, color: '#f1b24a' }}>DEV</div>
-
-      <div style={{ marginBottom: 10 }}>
-        <div style={{ opacity: 0.6, marginBottom: 4 }}>scheme</div>
-        <button onClick={() => setVariant('dpad')}  style={btn({ background: variant === 'dpad'  ? '#f1b24a' : '#2a2a2a', color: variant === 'dpad'  ? '#111' : '#c4c4c4' })}>D-pad</button>
-        <button onClick={() => setVariant('crown')} style={btn({ background: variant === 'crown' ? '#f1b24a' : '#2a2a2a', color: variant === 'crown' ? '#111' : '#c4c4c4' })}>Crown</button>
-      </div>
 
       <div style={{ marginBottom: 10, opacity: 0.8 }}>
         page: <b style={{ color: '#fff' }}>{state.page}</b><br />

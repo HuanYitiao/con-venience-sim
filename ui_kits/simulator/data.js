@@ -10,16 +10,17 @@ const SELF = {
   tel: '@Pix_Bob',
   furtrack: '@Bob_pix',
   url: 't.me/Pix_Bob',
+  shape: 'bob',
 };
 
 const CONTACTS = [
-  { username: 'Alice', species: 'Cat',    tel: '@BadCat',  furtrack: '@Al_cat', caught: 2 },
-  { username: 'Billy', species: 'Dog',    tel: '@BillyDog',furtrack: '@Bi_dog', caught: 1 },
-  { username: 'Cathy', species: 'Fox',    tel: '@CathyFox',furtrack: '@Ca_fox', caught: 4 },
-  { username: 'Diddy', species: 'Wolf',   tel: '@WolfDiddy',furtrack:'@Di_wlf', caught: 1 },
-  { username: 'Eip',   species: 'Rabbit', tel: '@Eippy',   furtrack: '@Ei_rab', caught: 1 },
-  { username: 'Fenrir',species: 'Wolf',   tel: '@FenWolf', furtrack: '@Fe_wlf', caught: 3 },
-  { username: 'Gus',   species: 'Otter',  tel: '@GusOtter',furtrack: '@Gu_ott', caught: 1 },
+  { username: 'Alice',  species: 'Cat',    tel: '@BadCat',   furtrack: '@Al_cat',  caught: 2, shape: 'cat'    },
+  { username: 'Billy',  species: 'Dog',    tel: '@BillyDog', furtrack: '@Bi_dog',  caught: 1, shape: 'dog'    },
+  { username: 'Cathy',  species: 'Fox',    tel: '@CathyFox', furtrack: '@Ca_fox',  caught: 4, shape: 'fox'    },
+  { username: 'Diddy',  species: 'Wolf',   tel: '@WolfDiddy',furtrack: '@Di_wlf',  caught: 1, shape: 'wolf'   },
+  { username: 'Eip',    species: 'Rabbit', tel: '@Eippy',    furtrack: '@Ei_rab',  caught: 1, shape: 'rabbit' },
+  { username: 'Fenrir', species: 'Wolf',   tel: '@FenWolf',  furtrack: '@Fe_wlf',  caught: 3, shape: 'wolf2'  },
+  { username: 'Gus',    species: 'Otter',  tel: '@GusOtter', furtrack: '@Gu_ott',  caught: 1, shape: 'otter'  },
 ];
 
 const SORT_GROUPS = [
