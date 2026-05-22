@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Open-source pixel fonts — con-venience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Pixelify+Sans:wght@400..700&family=VT323&family=Press+Start+2P&family=Jersey+10&family=Handjet:wght@100..900&family=Tiny5&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  /* ---- Chinese / Latin pixel font: Cubic 11, OFL, by ACh-K ---- */
+  @font-face {
+    font-family: "Cubic 11";
+    src: url("https://cdn.jsdelivr.net/gh/ACh-K/Cubic-11@v1.011/fonts/Cubic_11_1.011_R.ttf") format("truetype");
+    font-display: swap;
+  }
+  /* ---- Fusion Pixel 12px, OFL, by TakWolf ---- */
+  @font-face {
+    font-family: "Fusion Pixel 12";
+    src: url("https://cdn.jsdelivr.net/gh/TakWolf/fusion-pixel-font@latest/dist/v0.13.0/fusion-pixel-12px-monospaced/fusion-pixel-12px-monospaced-zh_hans.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  html, body { margin: 0; padding: 0; background: #f6f4ef; color: var(--ink); }
+  body {
+    font-family: var(--font-mono);
+    padding: 40px 48px 56px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- Page header ---- */
+  .page-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .title-block { display: flex; flex-direction: column; gap: 8px; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  .title {
+    font-family: var(--font-display);
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .subtitle {
+    font-family: var(--font-mono);
+    font-size: 17px;
+    line-height: 1.35;
+    max-width: 56ch;
+    opacity: 0.85;
+  }
+  .legend {
+    display: flex; flex-direction: column; gap: 6px;
+    font-family: var(--font-mono); font-size: 13px; line-height: 1.2;
+    text-align: right; opacity: 0.78;
+  }
+  .legend b { color: var(--ink); opacity: 1; font-weight: 400; }
+
+  /* ---- Section ---- */
+  .section { margin-top: 36px; }
+  .section-title {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 14px;
+  }
+  .section-title h2 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+  .section-title .count {
+    font-family: var(--font-mono); font-size: 14px; opacity: 0.55;
+  }
+  .section-title .rule {
+    flex: 1; height: 1px; background: var(--ink); opacity: 0.18;
+  }
+
+  /* ---- Specimen card ---- */
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    box-shadow: 0 2px 0 var(--ink);
+    padding: 22px 24px;
+    margin-bottom: 18px;
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 28px;
+    align-items: stretch;
+  }
+  .card.in-use {
+    background: var(--paper-hi);
+  }
+
+  /* main column */
+  .specimen { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .hero {
+    line-height: 0.95;
+    color: var(--ink);
+    /* don't smooth pixel fonts */
+    -webkit-font-smoothing: none;
+    font-smooth: never;
+    image-rendering: pixelated;
+    word-break: break-word;
+  }
+  .row {
+    display: flex; align-items: baseline; gap: 18px;
+    padding: 6px 0;
+    border-top: 1px dashed rgba(17,17,17,0.22);
+  }
+  .row .label {
+    width: 80px; flex-shrink: 0;
+    font-family: var(--font-mono); font-size: 13px;
+    opacity: 0.6; line-height: 1.1;
+  }
+  .row .text {
+    flex: 1;
+    line-height: 1.05;
+    color: var(--ink);
+    -webkit-font-smoothing: none;
+    font-smooth: never;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+
+  /* meta column */
+  .meta {
+    display: flex; flex-direction: column; gap: 10px;
+    padding-left: 22px;
+    border-left: 1px dashed rgba(17,17,17,0.25);
+    font-family: var(--font-mono); font-size: 13.5px; line-height: 1.35;
+  }
+  .meta dl { margin: 0; display: grid; grid-template-columns: 64px 1fr; row-gap: 6px; column-gap: 10px; }
+  .meta dt { opacity: 0.55; }
+  .meta dd { margin: 0; }
+  .meta a { color: var(--link); text-decoration: none; border-bottom: 1px solid currentColor; }
+
+  /* badges */
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge {
+    display: inline-block;
+    padding: 3px 8px 4px;
+    font-family: var(--font-mono); font-size: 12px;
+    line-height: 1; letter-spacing: 0.04em;
+    background: var(--ink); color: var(--paper);
+    border-radius: 0;
+  }
+  .badge--ofl { background: var(--ink); color: var(--paper); }
+  .badge--in-use { background: var(--led-amber); color: var(--ink); }
+  .badge--candidate { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
+  .badge--zh { background: var(--led-mint); color: var(--ink); }
+
+  /* footer */
+  .foot {
+    margin-top: 36px;
+    padding-top: 18px;
+    border-top: 1px solid var(--ink);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    font-family: var(--font-mono); font-size: 13.5px; line-height: 1.5;
+  }
+  .foot h3 {
+    font-family: var(--font-display); font-size: 14px;
+    margin: 0 0 8px; letter-spacing: 0.02em;
+  }
+  .foot ul { margin: 0; padding-left: 18px; }
+  .foot li { margin-bottom: 4px; }
+  .foot code {
+    font-family: var(--font-mono);
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 1px 5px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ======================================================== -->
+  <!-- HEADER                                                    -->
+  <!-- ======================================================== -->
+  <header class="page-head">
+    <div class="title-block">
+      <div class="eyebrow">font specimens · v1</div>
+      <div class="title" style="font-family: var(--font-display);">Open-source pixel fonts</div>
+      <div class="subtitle">
+        Every face below ships under <b>SIL Open Font License 1.1</b> — free for
+        commercial use, embedding, modification, and redistribution. Three are
+        already wired into the design system; the rest are vetted candidates
+        for when the system needs to stretch (alt display, animation, Chinese
+        glyph coverage).
+      </div>
+    </div>
+    <div class="legend">
+      <div><b>license</b> OFL 1.1 · CC BY 4.0</div>
+      <div><b>delivery</b> Google Fonts · jsdelivr CDN</div>
+      <div><b>fallback</b> monospace, system pixel stacks</div>
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- IN USE                                                    -->
+  <!-- ======================================================== -->
+  <section class="section">
+    <div class="section-title">
+      <h2>In the system</h2>
+      <span class="count">3 faces — already loaded everywhere</span>
+      <span class="rule"></span>
+    </div>
+
+    <!-- Silkscreen -->
+    <div class="card in-use">
+      <div class="specimen">
+        <div class="hero" style="font-family: 'Silkscreen', monospace; font-size: 52px;">Silkscreen</div>
+        <div class="row">
+          <div class="label">32 / xxl</div>
+          <div class="text" style="font-family: 'Silkscreen', monospace; font-size: 32px;">Bob</div>
+        </div>
+        <div class="row">
+          <div class="label">24 / xl</div>
+          <div class="text" style="font-family: 'Silkscreen', monospace; font-size: 24px;">Alice</div>
+        </div>
+        <div class="row">
+          <div class="label">16 / lg</div>
+          <div class="text" style="font-family: 'Silkscreen', monospace; font-size: 16px;">con-venience</div>
+        </div>
+      </div>
+      <aside class="meta">
+        <div class="badges">
+          <span class="badge badge--in-use">in use</span>
+          <span class="badge badge--ofl">OFL 1.1</span>
+        </div>
+        <dl>
+          <dt>role</dt><dd>Display · usernames, wordmark</dd>
+          <dt>token</dt><dd><code>--font-display</code></dd>
+          <dt>weights</dt><dd>400, 700</dd>
+          <dt>by</dt><dd>Jason Kottke (2001), Google Fonts release</dd>
+          <dt>matches</dt><dd>u8g2 <code>logisoso</code></dd>
+        </dl>
+      </aside>
+    </div>
+
+    <!-- Pixelify Sans -->
+    <div class="card in-use">
+      <div class="specimen">
+        <div class="hero" style="font-family: 'Pixelify Sans', monospace; font-size: 56px; font-weight: 500;">Pixelify Sans</div>
+        <div class="row">
+          <div class="label">22 / row</div>
+          <div class="text" style="font-family: 'Pixelify Sans', monospace; font-size: 22px;">Friends &nbsp; Sortment &nbsp; My profile</div>
+        </div>
+        <div class="row">
+          <div class="label">18 / md</div>
+          <div class="text" style="font-family: 'Pixelify Sans', monospace; font-size: 18px;">Species: Cat &nbsp;·&nbsp; Pronouns: he/they</div>
+        </div>
+        <div class="row">
+          <div class="label">14 / sm</div>
+          <div class="text" style="font-family: 'Pixelify Sans', monospace; font-size: 14px;">Press the button to pair · long-hold for menu</div>
+        </div>
+      </div>
+      <aside class="meta">
+        <div class="badges">
+          <span class="badge badge--in-use">in use</span>
+          <span class="badge badge--ofl">OFL 1.1</span>
+        </div>
+        <dl>
+          <dt>role</dt><dd>UI · menus, profile body</dd>
+          <dt>token</dt><dd><code>--font-ui</code></dd>
+          <dt>weights</dt><dd>variable, 400–700</dd>
+          <dt>by</dt><dd>Stefie Justprince, Google Fonts</dd>
+          <dt>matches</dt><dd>u8g2 <code>inb16</code></dd>
+        </dl>
+      </aside>
+    </div>
+
+    <!-- VT323 -->
+    <div class="card in-use">
+      <div class="specimen">
+        <div class="hero" style="font-family: 'VT323', monospace; font-size: 64px;">VT323</div>
+        <div class="row">
+          <div class="label">18 / log</div>
+          <div class="text" style="font-family: 'VT323', monospace; font-size: 18px;">[00:14:22] ACOM&nbsp;OK · peer 0x4F2A handshake → recv'd</div>
+        </div>
+        <div class="row">
+          <div class="label">14 / hex</div>
+          <div class="text" style="font-family: 'VT323', monospace; font-size: 14px;">0x00 0xA5 0x10 0xFF · CRC 0x4E ✓</div>
+        </div>
+      </div>
+      <aside class="meta">
+        <div class="badges">
+          <span class="badge badge--in-use">in use</span>
+          <span class="badge badge--ofl">OFL 1.1</span>
+        </div>
+        <dl>
+          <dt>role</dt><dd>Mono · firmware logs, hex dumps</dd>
+          <dt>token</dt><dd><code>--font-mono</code></dd>
+          <dt>weights</dt><dd>400</dd>
+          <dt>by</dt><dd>Peter Hull — VT220 terminal revival</dd>
+          <dt>matches</dt><dd>u8g2 <code>profont</code></dd>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- CANDIDATES                                                -->
+  <!-- ======================================================== -->
+  <section class="section">
+    <div class="section-title">
+      <h2>Extension candidates</h2>
+      <span class="count">5 faces — drop-in additions, no token rewrite</span>
+      <span class="rule"></span>
+    </div>
+
+    <!-- Press Start 2P -->
+    <div class="card">
+      <div class="specimen">
+        <div class="hero" style="font-family: 'Press Start 2P', monospace; font-size: 32px;">Press Start 2P</div>
+        <div class="row">
+          <div class="label">22</div>
+          <div class="text" style="font-family: 'Press Start 2P', monospace; font-size: 22px;">INSERT COIN</div>
+        </div>
+        <div class="row">
+          <div class="label">14</div>
+          <div class="text" style="font-family: 'Press Start 2P', monospace; font-size: 14px;">PRESS A TO PAIR · ▶ START</div>
+        </div>
+      </div>
+      <aside class="meta">
+        <div class="badges">
+          <span class="badge badge--candidate">candidate</span>
+          <span class="badge badge--ofl">OFL 1.1</span>
+        </div>
+        <dl>
+          <dt>role</dt><dd>Alt display — 8-bit cabinet feel for packaging, swag, easter-eggs</dd>
+          <dt>by</dt><dd>CodeMan38 — based on Namco 1980s arcade ROMs</dd>
+          <dt>note</dt><dd>Already in the <code>--font-display</code> fallback stack.</dd>
+        </dl>
+      </aside>
+    </div>
+
+    <!-- Jersey 10 -->
+    <div class="card">
+      <div class="specimen">
+        <div class="hero" style="font-family: 'Jersey 10', monospace; font-size: 64px;">Jersey 10</div>
+        <div class="row">
+          <div class="label">32</div>
+          <div class="text" style="font-family: 'Jersey 10', monospace; font-size: 32px;">Stockholm Furcon · Hall B</div>
+        </div>
+        <div class="row">
+          <div class="label">20</div>
+          <div class="text" style="font-family: 'Jersey 10', monospace; font-size: 20px;">Door schedule · 09:00 – 22:00 · Friday</div>
+        </div>
+      </div>
+      <aside class="meta">
+        <div class="badges">
+          <span class="badge badge--candidate">candidate</span>
+          <span class="badge badge--ofl">OFL 1.1</span>
+        </div>
+        <dl>
+          <dt>role</dt><dd>Alt display — softer, more typographic than Silkscreen. Good for long titles, posters, badges.</dd>
+          <dt>by</dt><dd>Sergiy S. Tkachenko · sized variants 10/15/20/25 available.</dd>
+        </dl>
+      </aside>
+    </div>
+
+    <!-- Handjet -->
+    <div class="card">
+      <div class="specimen">
+        <div class="hero" style="font-family: 'Handjet', monospace; font-size: 58px; font-variation-settings: 'ELGR' 1, 'ELSH' 2, 'wght' 500;">Handjet · variable</div>
+        <div class="row">
+          <div class="label">w 200</div>
+          <div class="text" style="font-family: 'Handjet', monospace; font-size: 26px; font-weight: 200;">PAIRING…</div>
+        </div>
+        <div class="row">
+          <div class="label">w 500</div>
+          <div class="text" style="font-family: 'Handjet', monospace; font-size: 26px; font-weight: 500;">PAIRING…</div>
+        </div>
+        <div class="row">
+          <div class="label">w 900</div>
+          <div class="text" style="font-family: 'Handjet', monospace; font-size: 26px; font-weight: 900;">PAIRING…</div>
+        </div>
+      </div>
+      <aside class="meta">
+        <div class="badges">
+          <span class="badge badge--candidate">candidate</span>
+          <span class="badge badge--ofl">OFL 1.1</span>
+        </div>
+        <dl>
+          <dt>role</dt><dd>Variable pixel — weight + grid axes. Useful for web companion animations, loading states, sliders.</dd>
+          <dt>by</dt><dd>David Březina, Rosetta Type Foundry</dd>
+          <dt>caveat</dt><dd>Do <b>not</b> use on-device — it has anti-aliased curves that violate the 1-bit rule.</dd>
+        </dl>
+      </aside>
+    </div>
+
+    <!-- Tiny5 -->
+    <div class="card">
+      <div class="specimen">
+        <div class="hero" style="font-family: 'Tiny5', monospace; font-size: 56px;">Tiny5</div>
+        <div class="row">
+          <div class="label">10</div>
+          <div class="text" style="font-family: 'Tiny5', monospace; font-size: 10px;">BATT 87% · ACOM IDLE · 23 FRIENDS · 14:02</div>
+        </div>
+        <div class="row">
+          <div class="label">14</div>
+          <div class="text" style="font-family: 'Tiny5', monospace; font-size: 14px;">Status bar · notification toast · footer chip</div>
+        </div>
+      </div>
+      <aside class="meta">
+        <div class="badges">
+          <span class="badge badge--candidate">candidate</span>
+          <span class="badge badge--ofl">OFL 1.1</span>
+        </div>
+        <dl>
+          <dt>role</dt><dd>Micro-UI · 5px x-height — readable at sizes where Pixelify Sans collapses. Status pills, BLE pairing toasts.</dd>
+          <dt>by</dt><dd>Velvetyne Type Foundry</dd>
+        </dl>
+      </aside>
+    </div>
+
+    <!-- Cubic 11 (Chinese) -->
+    <div class="card">
+      <div class="specimen">
+        <div class="hero" style="font-family: 'Cubic 11', monospace; font-size: 44px; line-height: 1.1;">Cubic 11 · 方块字</div>
+        <div class="row">
+          <div class="label">22 / zh</div>
+          <div class="text" style="font-family: 'Cubic 11', monospace; font-size: 22px;">已配对 · 触碰手腕即可交换名片</div>
+        </div>
+        <div class="row">
+          <div class="label">16 / mix</div>
+          <div class="text" style="font-family: 'Cubic 11', monospace; font-size: 16px;">Bob → 阿狸 · 距离 0cm · ACOM ✓ 同步成功</div>
+        </div>
+      </div>
+      <aside class="meta">
+        <div class="badges">
+          <span class="badge badge--candidate">candidate</span>
+          <span class="badge badge--zh">CJK</span>
+          <span class="badge badge--ofl">OFL 1.1</span>
+        </div>
+        <dl>
+          <dt>role</dt><dd>Open-source CJK pixel font. 11px grid, full Traditional + Simplified coverage. Pairs cleanly with Pixelify Sans for bilingual docs/packaging.</dd>
+          <dt>by</dt><dd>ACh-K (台灣) · GitHub <code>ACh-K/Cubic-11</code></dd>
+          <dt>delivery</dt><dd>jsdelivr CDN (not on Google Fonts)</dd>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- FOOTER                                                    -->
+  <!-- ======================================================== -->
+  <footer class="foot">
+    <div>
+      <h3>License at a glance</h3>
+      <ul>
+        <li><b>OFL 1.1</b> — free commercial use, embedding into firmware
+          and apps, modification, redistribution. The only constraint:
+          can't sell the font itself in isolation. Safe for the whole
+          con-venience pipeline.</li>
+        <li><b>u8g2 BDF fonts</b> (on-device) — BSD 2-Clause. Already
+          baked into firmware builds.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>If pixel-perfection matters</h3>
+      <ul>
+        <li>Silkscreen / Pixelify Sans are <i>close</i> to the u8g2
+          shipping glyphs but not identical.</li>
+        <li>For marketing screenshots, extract glyphs from
+          <code>logisoso</code>, <code>inb16</code>, <code>profont</code>
+          BDF sources and ship as a self-hosted woff2 — same license
+          (BSD), 1:1 fidelity.</li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
