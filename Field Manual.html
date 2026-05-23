@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>con-venience · Field Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Pixelify+Sans:wght@400..700&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+/* ============================================================
+   FIELD MANUAL — typesetting
+   A long, narrow zine printed on e-ink paper. All ink, no gradients,
+   dither does the work of tone.
+   ============================================================ */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+body {
+  background-image:
+    /* faint vertical dither bands at the page edges, like the homepage screen */
+    linear-gradient(to right,
+      var(--ink) 0, transparent 4px,
+      transparent calc(50% - 480px),
+      transparent calc(50% + 480px),
+      transparent calc(100% - 4px), var(--ink) 100%);
+  background-repeat: no-repeat;
+}
+
+.paper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 72px 56px 96px;
+  position: relative;
+}
+
+/* ---- Dither halftone, generated as CSS pattern --------------- */
+.dither-25 { background-image: radial-gradient(var(--ink) 1px, transparent 1px); background-size: 4px 4px; }
+.dither-50 { background-image: radial-gradient(var(--ink) 1px, transparent 1px); background-size: 3px 3px; }
+.dither-75 { background-image: radial-gradient(var(--ink) 1.2px, transparent 1.2px); background-size: 2.6px 2.6px; }
+
+/* ---- Section dividers ---------------------------------------- */
+.rule {
+  height: 14px;
+  margin: 56px 0;
+  background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+  background-size: 3px 3px;
+  background-position: 0 50%;
+  background-repeat: repeat-x;
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+/* ---- Chapter heading ----------------------------------------- */
+.chapter {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 20px;
+  align-items: baseline;
+  margin-bottom: 22px;
+}
+.chapter .roman {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 8px;
+  text-align: left;
+}
+.chapter h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  margin: 0;
+  letter-spacing: 0.01em;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 8px;
+}
+.chapter .sub {
+  grid-column: 2;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.4;
+  opacity: 0.78;
+  margin-top: 8px;
+  max-width: 60ch;
+}
+
+/* ---- Body prose ---------------------------------------------- */
+p { font-family: var(--font-ui); font-size: 17px; line-height: 1.4; max-width: 60ch; }
+.lead { font-size: 20px; line-height: 1.35; }
+strong { font-weight: 700; }
+
+.epigraph {
+  font-family: var(--font-mono);
+  font-size: 19px;
+  line-height: 1.3;
+  font-style: italic;
+  padding: 18px 20px;
+  border-left: 3px solid var(--ink);
+  margin: 28px 0;
+  max-width: 56ch;
+}
+.epigraph .cite { display: block; font-style: normal; font-size: 14px; opacity: 0.7; margin-top: 6px; letter-spacing: 0.06em; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 48px;
+  align-items: end;
+  padding-bottom: 32px;
+  border-bottom: 2px solid var(--ink);
+}
+.hero .wordmark {
+  font-family: var(--font-display);
+  font-size: 88px;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.hero .wordmark .hyphen { color: var(--ink); }
+.hero .tag {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  line-height: 1.2;
+  margin-top: 14px;
+  max-width: 32ch;
+}
+.hero .micro {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.62;
+  margin-bottom: 18px;
+}
+.hero .bob {
+  width: 220px; height: 220px;
+  image-rendering: pixelated;
+  margin: 0 auto;
+  display: block;
+  align-self: end;
+}
+
+/* small metadata strip under the hero */
+.meta-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 28px;
+  padding: 14px 0 0;
+}
+.meta-strip > div { font-family: var(--font-mono); font-size: 13.5px; line-height: 1.3; }
+.meta-strip dt {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  opacity: 0.7;
+}
+.meta-strip dd { margin: 0; }
+
+/* ============================================================
+   CHAPTER II — THE TOUCH (animated pairing)
+   ============================================================ */
+.pair-stage {
+  margin: 28px auto 12px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 28px;
+  padding: 36px 18px;
+  background-image: radial-gradient(var(--ink) 1px, transparent 1.4px);
+  background-size: 6px 6px;
+  border: 2px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+/* device chrome */
+.device {
+  background: var(--chassis);
+  padding: 14px 14px 18px;
+  border-radius: var(--radius-chassis);
+  box-shadow: 0 4px 0 #000, inset 0 0 0 2px var(--chassis-edge);
+  width: max-content;
+}
+.device .screen-frame {
+  background: var(--paper);
+  border-radius: var(--radius-screen);
+  width: 296px;
+  height: 128px;
+  overflow: hidden;
+  image-rendering: pixelated;
+  position: relative;
+}
+.device .screen-frame img {
+  width: 100%; height: 100%;
+  image-rendering: pixelated;
+  display: block;
+}
+.device .btn {
+  width: 32px; height: 5px;
+  background: var(--chassis-edge);
+  border-radius: 3px;
+  margin: 10px auto 0;
+}
+.device .led {
+  position: absolute; top: -4px; right: 20px;
+  width: 6px; height: 6px;
+  background: var(--led-amber);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--led-amber);
+}
+.device .strap-top,
+.device .strap-bot {
+  height: 22px;
+  background: var(--strap);
+  background-image:
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 4px);
+  border-radius: 4px;
+  margin: 0 -2px;
+}
+.device .strap-top { margin-bottom: 6px; }
+.device .strap-bot { margin-top: 8px; }
+
+/* between-devices sonar pulse */
+.pair-bridge {
+  width: 240px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  height: 168px;
+}
+.pair-bridge svg { display: block; }
+.acom-wire {
+  position: absolute; left: 0; right: 0; top: 50%;
+  transform: translateY(-50%);
+  height: 4px;
+  background: var(--ink);
+}
+.acom-bit {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 8px; height: 8px; background: var(--ink);
+  box-shadow: 0 0 0 2px var(--paper);
+}
+.bit-1 { animation: bit-travel 1.8s steps(20, end) infinite; }
+.bit-2 { animation: bit-travel 1.8s steps(20, end) infinite; animation-delay: 0.2s; }
+.bit-3 { animation: bit-travel 1.8s steps(20, end) infinite; animation-delay: 0.4s; }
+.bit-4 { animation: bit-travel 1.8s steps(20, end) infinite; animation-delay: 0.6s; }
+.bit-5 { animation: bit-travel 1.8s steps(20, end) infinite; animation-delay: 0.8s; reverse: 1; }
+@keyframes bit-travel {
+  from { left: 0%; opacity: 0; }
+  5%   { opacity: 1; }
+  90%  { opacity: 1; }
+  to   { left: 100%; opacity: 0; }
+}
+
+/* sonar arcs - stepped, no easing, like e-ink refresh */
+.sonar {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+.sonar-arc {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+@keyframes sonar-pulse {
+  0%, 100% { opacity: 0; transform: scale(0.2); }
+  20%, 90% { opacity: 1; }
+  90%      { transform: scale(1.4); }
+}
+.sonar-arc.a1 { animation: sonar-pulse 2400ms steps(8, end) infinite; transform-origin: center; }
+.sonar-arc.a2 { animation: sonar-pulse 2400ms steps(8, end) infinite; animation-delay: 800ms; transform-origin: center; }
+.sonar-arc.a3 { animation: sonar-pulse 2400ms steps(8, end) infinite; animation-delay: 1600ms; transform-origin: center; }
+
+.pair-caption {
+  display: flex;
+  align-items: center; justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  opacity: 0.78;
+}
+.pair-caption .left { letter-spacing: 0.06em; text-transform: uppercase; }
+.pair-caption .right { letter-spacing: 0.06em; text-transform: uppercase; }
+.pair-caption .center {
+  display: flex; gap: 6px; align-items: center;
+}
+.pair-caption .center::before {
+  content: "";
+  width: 6px; height: 6px; background: var(--led-amber); border-radius: 50%;
+  box-shadow: 0 0 6px var(--led-amber);
+  animation: blink 1.2s steps(2, end) infinite;
+}
+@keyframes blink { 50% { opacity: 0.2; } }
+
+/* ============================================================
+   CHAPTER III — SPECIFICATION
+   ============================================================ */
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 2px solid var(--ink);
+  margin-top: 8px;
+}
+.spec {
+  padding: 18px 18px 16px;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  background: var(--paper-hi);
+}
+.spec:nth-child(3n) { border-right: none; }
+.spec:nth-last-child(-n+3) { border-bottom: none; }
+.spec dt {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+.spec dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 17px;
+  line-height: 1.25;
+}
+.spec dd em { font-style: normal; font-family: var(--font-display); font-size: 26px; }
+
+/* ============================================================
+   CHAPTER IV — ACOM PROTOCOL
+   ============================================================ */
+.protocol {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+.protocol-diagram {
+  background: var(--chassis);
+  color: var(--paper);
+  padding: 22px 20px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.protocol-diagram .row {
+  display: grid;
+  grid-template-columns: 60px 1fr 80px;
+  gap: 10px;
+  align-items: center;
+  padding: 4px 0;
+}
+.protocol-diagram .row .side { color: var(--led-amber); }
+.protocol-diagram .row .arrow {
+  font-family: var(--font-mono);
+  letter-spacing: -2px;
+  color: var(--paper);
+  opacity: 0.6;
+}
+.protocol-diagram .row .arrow.tx { text-align: center; }
+.protocol-diagram .hex { color: var(--led-mint); }
+.protocol-diagram .sep {
+  height: 1px;
+  background: var(--paper);
+  opacity: 0.15;
+  margin: 6px 0;
+}
+.protocol-diagram .title {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--led-amber);
+  margin-bottom: 10px;
+}
+
+.protocol-notes h4 {
+  font-family: var(--font-display);
+  font-size: 13px;
+  margin: 0 0 6px;
+  letter-spacing: 0.02em;
+}
+.protocol-notes p { font-size: 16px; }
+.protocol-notes ul { padding-left: 18px; font-family: var(--font-ui); font-size: 16px; line-height: 1.45; }
+.protocol-notes li { margin-bottom: 6px; }
+
+/* ============================================================
+   CHAPTER V — A DAY AT THE CON (timeline)
+   ============================================================ */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 18px;
+}
+.tl-row {
+  display: grid;
+  grid-template-columns: 80px 360px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.tl-time {
+  font-family: var(--font-display);
+  font-size: 18px;
+  text-align: right;
+  padding-top: 10px;
+  border-right: 2px solid var(--ink);
+  padding-right: 18px;
+  position: relative;
+}
+.tl-time::after {
+  content: "";
+  position: absolute;
+  right: -7px; top: 14px;
+  width: 12px; height: 12px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+}
+.tl-time small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-top: 6px;
+}
+.tl-device {
+  width: 324px;
+}
+.tl-device .device { padding: 12px 12px 14px; }
+.tl-device .device .screen-frame { width: 296px; height: 128px; }
+.tl-note h4 {
+  font-family: var(--font-display);
+  font-size: 14px;
+  margin: 6px 0 6px;
+  letter-spacing: 0.02em;
+}
+.tl-note p { font-size: 16px; margin: 0; line-height: 1.4; }
+.tl-note .stat {
+  font-family: var(--font-mono); font-size: 13px; opacity: 0.7;
+  margin-top: 8px; letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   CHAPTER VI — OPEN SOURCE
+   ============================================================ */
+.os-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+.os-card {
+  border: 2px solid var(--ink);
+  padding: 20px 22px;
+  background: var(--paper);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.os-card h4 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+.os-card p { font-size: 15.5px; margin: 0 0 12px; line-height: 1.4; }
+.os-card .link {
+  font-family: var(--font-mono); font-size: 14px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  text-decoration: none;
+  padding-bottom: 1px;
+}
+.os-card .tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2px 6px 3px;
+  margin-right: 6px;
+  margin-bottom: 10px;
+}
+
+/* ============================================================
+   FOOTER / colophon
+   ============================================================ */
+.colophon {
+  margin-top: 64px;
+  padding-top: 26px;
+  border-top: 2px solid var(--ink);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 26px;
+  font-family: var(--font-mono); font-size: 13px; line-height: 1.5;
+}
+.colophon h5 {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  margin: 0 0 6px;
+  opacity: 0.7;
+}
+.colophon a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
+.signoff {
+  margin-top: 36px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-style: italic;
+  font-size: 16px;
+  opacity: 0.78;
+}
+
+/* corner registration marks, like print stocks */
+.reg {
+  position: absolute;
+  width: 12px; height: 12px;
+  border: 1px solid var(--ink);
+}
+.reg.tl { top: 18px; left: 18px; border-right: none; border-bottom: none; }
+.reg.tr { top: 18px; right: 18px; border-left: none; border-bottom: none; }
+.reg.bl { bottom: 18px; left: 18px; border-right: none; border-top: none; }
+.reg.br { bottom: 18px; right: 18px; border-left: none; border-top: none; }
+
+/* edge dither bars (homepage screen quote) */
+.edge-dither {
+  position: fixed;
+  top: 0; bottom: 0;
+  width: 28px;
+  background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+  background-size: 4px 4px;
+  mask-image: linear-gradient(to right, var(--ink), transparent);
+  -webkit-mask-image: linear-gradient(to right, var(--ink), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+.edge-dither.right {
+  right: 0;
+  mask-image: linear-gradient(to left, var(--ink), transparent);
+  -webkit-mask-image: linear-gradient(to left, var(--ink), transparent);
+}
+
+/* ============================================================
+   small fixes / pixel hygiene
+   ============================================================ */
+img.pixel { image-rendering: pixelated; }
+.bob-icon { width: 28px; height: 28px; image-rendering: pixelated; vertical-align: middle; }
+
+</style>
+</head>
+<body>
+
+<div class="edge-dither"></div>
+<div class="edge-dither right"></div>
+
+<main class="paper">
+
+  <div class="reg tl"></div><div class="reg tr"></div>
+  <div class="reg bl"></div><div class="reg br"></div>
+
+  <!-- ============================================================
+       HERO
+  ============================================================= -->
+  <section class="hero">
+    <div>
+      <div class="micro">field manual · revision 0.3 · stockholm</div>
+      <h1 class="wordmark">con<span class="hyphen">-</span>venience</h1>
+      <p class="tag">A wrist-worn device for fursuiters who have run out of fingers.</p>
+    </div>
+    <img class="bob" src="assets/avatar-bob.png" alt="Bob — the reference 1-bit avatar, a serene pixel cat">
+  </section>
+
+  <dl class="meta-strip">
+    <div><dt>Form</dt><dd>Wrist-worn · 296×128 e-ink</dd></div>
+    <div><dt>Touch</dt><dd>ACOM single-wire UART</dd></div>
+    <div><dt>Power</dt><dd>CR2450 · ~18h</dd></div>
+    <div><dt>License</dt><dd>Open hardware · open source</dd></div>
+  </dl>
+
+  <p class="epigraph">
+    Ubi amici, ibi opes.
+    <span class="cite">— Plautus · where there are friends, there is wealth</span>
+  </p>
+
+
+  <!-- ============================================================
+       I — THE PROBLEM
+  ============================================================= -->
+  <div class="rule"></div>
+  <header class="chapter">
+    <div class="roman">I</div>
+    <h2>The problem we keep running into</h2>
+    <p class="sub">Two fursuiters hit it off. They reach for their phones — and stop.</p>
+  </header>
+
+  <p class="lead">
+    Paws can't type. Mesh eyes can't see Face ID. De-suiting just to
+    swap a Telegram handle breaks the magic of the encounter every
+    single time.
+  </p>
+
+  <p>
+    There are workarounds. Printed business cards in a hip pouch.
+    Photographing a phone screen through fabric. Asking a friend to
+    type for you. None of them are good. All of them require
+    interrupting the bit, the costume, the moment.
+  </p>
+
+  <p>
+    con-venience is the shortest path between two people who would
+    otherwise stay strangers. Touch wrists. Done. The rest of the
+    convention is yours.
+  </p>
+
+
+  <!-- ============================================================
+       II — THE TOUCH
+  ============================================================= -->
+  <div class="rule"></div>
+  <header class="chapter">
+    <div class="roman">II</div>
+    <h2>The touch</h2>
+    <p class="sub">Two contact pads. One half-duplex wire. About 400 ms of UART.</p>
+  </header>
+
+  <div class="pair-stage">
+    <!-- LEFT DEVICE -->
+    <div class="device" style="margin-left:auto;">
+      <div class="strap-top"></div>
+      <div class="screen-frame">
+        <div class="led"></div>
+        <img class="pixel" src="assets/screens/pairing.png" alt="Pairing screen: cat with sonar arcs">
+      </div>
+      <div class="btn"></div>
+      <div class="strap-bot"></div>
+    </div>
+
+    <!-- BRIDGE -->
+    <div class="pair-bridge">
+      <svg width="240" height="120" viewBox="0 0 240 120" class="sonar" aria-hidden="true">
+        <!-- baseline wire -->
+        <line x1="0" y1="60" x2="240" y2="60" stroke="#111" stroke-width="3"/>
+        <!-- contact "knot" in the middle -->
+        <circle cx="120" cy="60" r="6" fill="#111"/>
+        <!-- sonar arcs emanating outward -->
+        <g transform="translate(120 60)">
+          <circle class="sonar-arc a1" r="18"/>
+          <circle class="sonar-arc a2" r="32"/>
+          <circle class="sonar-arc a3" r="48"/>
+        </g>
+        <!-- packet markers travelling left→right -->
+        <g>
+          <rect class="pkt" x="-12" y="55" width="10" height="10" fill="#111">
+            <animate attributeName="x" values="-12;240" dur="1.6s" repeatCount="indefinite" calcMode="discrete" keyTimes="0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1" />
+          </rect>
+          <rect class="pkt" x="-12" y="55" width="10" height="10" fill="#111" opacity="0.7">
+            <animate attributeName="x" values="-12;240" dur="1.6s" begin="0.4s" repeatCount="indefinite" calcMode="discrete" keyTimes="0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1" />
+          </rect>
+          <!-- a packet going back, ack -->
+          <rect class="pkt" x="240" y="55" width="10" height="10" fill="#111" opacity="0.5">
+            <animate attributeName="x" values="240;-12" dur="1.6s" begin="0.8s" repeatCount="indefinite" calcMode="discrete" keyTimes="0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1" />
+          </rect>
+        </g>
+      </svg>
+    </div>
+
+    <!-- RIGHT DEVICE -->
+    <div class="device" style="margin-right:auto;">
+      <div class="strap-top"></div>
+      <div class="screen-frame">
+        <div class="led"></div>
+        <img class="pixel" src="assets/screens/connect.png" alt="Connect screen: receiving incoming pair">
+      </div>
+      <div class="btn"></div>
+      <div class="strap-bot"></div>
+    </div>
+  </div>
+
+  <div class="pair-caption">
+    <div class="left">device · BOB &nbsp;0x4F:2A</div>
+    <div class="center">ACOM handshake · 9600 baud · half-duplex</div>
+    <div class="right">device · ALICE &nbsp;0xB1:07</div>
+  </div>
+
+  <p style="margin-top:28px;">
+    No menus, no Bluetooth pairing dance. Pads in the chassis press
+    together when wrists meet; the firmware notices the line go low,
+    sends a one-byte hello, waits for the matching byte back, then
+    streams the profile blob across a single shared wire. The whole
+    exchange completes inside half a second — about as long as a
+    polite "nice to meet you."
+  </p>
+
+
+  <!-- ============================================================
+       III — THE HARDWARE
+  ============================================================= -->
+  <div class="rule"></div>
+  <header class="chapter">
+    <div class="roman">III</div>
+    <h2>What's in the chassis</h2>
+    <p class="sub">A coin cell, a small ESP32, an e-ink panel that draws no current when nothing is happening — and almost nothing else.</p>
+  </header>
+
+  <dl class="spec-grid">
+    <div class="spec">
+      <dt>MCU</dt>
+      <dd><em>ESP32</em><br>S3-Zero · BLE + USB-C</dd>
+    </div>
+    <div class="spec">
+      <dt>Display</dt>
+      <dd><em>296×128</em><br>2.9" Waveshare e-ink · 1-bit</dd>
+    </div>
+    <div class="spec">
+      <dt>Input</dt>
+      <dd><em>1 btn</em><br>short / long press</dd>
+    </div>
+    <div class="spec">
+      <dt>Audio</dt>
+      <dd><em>1 buzz</em><br>passive piezo · Game Boy melodies</dd>
+    </div>
+    <div class="spec">
+      <dt>Power</dt>
+      <dd><em>CR2450</em><br>~18h convention day</dd>
+    </div>
+    <div class="spec">
+      <dt>Contact</dt>
+      <dd><em>ACOM</em><br>two pads · two magnets · one wire</dd>
+    </div>
+  </dl>
+
+
+  <!-- ============================================================
+       IV — ACOM PROTOCOL
+  ============================================================= -->
+  <div class="rule"></div>
+  <header class="chapter">
+    <div class="roman">IV</div>
+    <h2>The ACOM protocol, in full</h2>
+    <p class="sub">It is shorter than most error messages.</p>
+  </header>
+
+  <div class="protocol">
+    <div class="protocol-diagram">
+      <div class="title">ACOM · v1 · handshake</div>
+      <div class="row"><span class="side">BOB</span><span class="arrow tx">─── <span class="hex">0xC0</span> ───▶</span><span class="side" style="text-align:right;">ALICE</span></div>
+      <div class="row"><span class="side">BOB</span><span class="arrow tx">◀── <span class="hex">0xC1</span> ───</span><span class="side" style="text-align:right;">ALICE</span></div>
+      <div class="sep"></div>
+      <div class="row"><span class="side">BOB</span><span class="arrow tx">─── <span class="hex">LEN · payload · CRC</span> ─▶</span><span class="side" style="text-align:right;">ALICE</span></div>
+      <div class="row"><span class="side">BOB</span><span class="arrow tx">◀── <span class="hex">LEN · payload · CRC</span> ─</span><span class="side" style="text-align:right;">ALICE</span></div>
+      <div class="sep"></div>
+      <div class="row"><span class="side">BOB</span><span class="arrow tx">─── <span class="hex">0xEE</span> ───▶</span><span class="side" style="text-align:right;">ALICE</span></div>
+      <div class="row"><span class="side">BOB</span><span class="arrow tx">◀── <span class="hex">0xEE</span> ───</span><span class="side" style="text-align:right;">ALICE</span></div>
+      <div class="sep"></div>
+      <div style="font-size:12px;opacity:0.6;margin-top:8px;">total · ~340ms · 9600 baud · half-duplex on a single shared line</div>
+    </div>
+
+    <div class="protocol-notes">
+      <h4>Why so little</h4>
+      <p>The payload is a profile blob: 64-byte avatar, fursona name,
+      species, pronouns, two optional handles. Capped at 512 bytes,
+      so even a worst-case packet flies across in under 600 ms.</p>
+
+      <h4>Why so dumb</h4>
+      <ul>
+        <li>No pairing keys. There's no security model — by design.
+          If you didn't want to swap, you wouldn't touch wrists.</li>
+        <li>No retries beyond CRC fail. A botched handshake just
+          shows the failure animation and asks for another touch.</li>
+        <li>No clock sync. UART is self-clocking. The peer can be
+          deep-sleep cold and still respond.</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       V — A DAY AT THE CON
+  ============================================================= -->
+  <div class="rule"></div>
+  <header class="chapter">
+    <div class="roman">V</div>
+    <h2>A day at the con, as the device sees it</h2>
+    <p class="sub">Saturday. NordicFuzzCon. Bob, who is a cat.</p>
+  </header>
+
+  <div class="timeline">
+
+    <!-- 08:42 -->
+    <div class="tl-row">
+      <div class="tl-time">08:42<small>wake</small></div>
+      <div class="tl-device">
+        <div class="device">
+          <div class="strap-top"></div>
+          <div class="screen-frame"><img class="pixel" src="assets/screens/homepage.png" alt="Homepage: cat avatar centered, dithered edges"></div>
+          <div class="btn"></div>
+          <div class="strap-bot"></div>
+        </div>
+      </div>
+      <div class="tl-note">
+        <h4>Homepage</h4>
+        <p>The device wakes with Bob's avatar centered, dithered halftone bands at the edges acting as a curtain frame. Static. Drawing zero milliamps. Ready.</p>
+        <div class="stat">friends · 0 · battery · 100% · ACOM idle</div>
+      </div>
+    </div>
+
+    <!-- 11:14 -->
+    <div class="tl-row">
+      <div class="tl-time">11:14<small>first touch</small></div>
+      <div class="tl-device">
+        <div class="device">
+          <div class="strap-top"></div>
+          <div class="screen-frame"><img class="pixel" src="assets/screens/pairing.png" alt="Pairing screen: sonar arcs"></div>
+          <div class="btn"></div>
+          <div class="strap-bot"></div>
+        </div>
+      </div>
+      <div class="tl-note">
+        <h4>Pairing</h4>
+        <p>Bob's paws meet Alice's in the dealer room. The contact pads click closed. Sonar arcs pulse outward; the buzzer plays a three-note rising melody. 340 ms later it's a friendship.</p>
+        <div class="stat">peer · ALICE 0xB1:07 · CRC ✓ · buzzer · do-mi-sol</div>
+      </div>
+    </div>
+
+    <!-- 13:30 -->
+    <div class="tl-row">
+      <div class="tl-time">13:30<small>browsing</small></div>
+      <div class="tl-device">
+        <div class="device">
+          <div class="strap-top"></div>
+          <div class="screen-frame"><img class="pixel" src="assets/screens/friends_sortment.png" alt="Friends sortment: con, color, species menu"></div>
+          <div class="btn"></div>
+          <div class="strap-bot"></div>
+        </div>
+      </div>
+      <div class="tl-note">
+        <h4>Sortment</h4>
+        <p>Over lunch Bob long-presses to open the friends list and sorts. Group by <em>con</em> — everyone he's met today. By <em>species</em> — three foxes, two cats, one extremely tall snow leopard.</p>
+        <div class="stat">friends · 7 · sort · con / species / color</div>
+      </div>
+    </div>
+
+    <!-- 17:08 -->
+    <div class="tl-row">
+      <div class="tl-time">17:08<small>profile</small></div>
+      <div class="tl-device">
+        <div class="device">
+          <div class="strap-top"></div>
+          <div class="screen-frame"><img class="pixel" src="assets/screens/friend_profile.png" alt="Friend profile detail screen"></div>
+          <div class="btn"></div>
+          <div class="strap-bot"></div>
+        </div>
+      </div>
+      <div class="tl-note">
+        <h4>Profile</h4>
+        <p>The friend he met at 11:14 turns out to be a furniture designer from Malmö. The avatar is dithered. The pronouns are correct. The handle is right there for later. Nobody had to take off a head.</p>
+        <div class="stat">ALICE · fox · she/her · @alicewolf</div>
+      </div>
+    </div>
+
+    <!-- 23:55 -->
+    <div class="tl-row">
+      <div class="tl-time">23:55<small>sleep</small></div>
+      <div class="tl-device">
+        <div class="device">
+          <div class="strap-top"></div>
+          <div class="screen-frame"><img class="pixel" src="assets/screens/friends_list.png" alt="Friends list filled with names"></div>
+          <div class="btn"></div>
+          <div class="strap-bot"></div>
+        </div>
+      </div>
+      <div class="tl-note">
+        <h4>End of day</h4>
+        <p>The list, full now. Bob takes the suit off, plugs into USB, and the day flows to his laptop as a single JSON file. The e-ink panel keeps showing the friends list while he sleeps — drawing nothing — until tomorrow.</p>
+        <div class="stat">friends · 23 · battery · 71% · USB · syncing</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       VI — OPEN SOURCE
+  ============================================================= -->
+  <div class="rule"></div>
+  <header class="chapter">
+    <div class="roman">VI</div>
+    <h2>The hardware is a platform</h2>
+    <p class="sub">What runs on it is up to everyone.</p>
+  </header>
+
+  <p>
+    The furry community has a lot of programmers. This project is
+    designed for them. Firmware, schematics, mockups, simulator,
+    this design system — all open. Fork it. Reflash it. Make it do
+    something it wasn't supposed to do.
+  </p>
+
+  <div class="os-grid">
+    <div class="os-card">
+      <span class="tag">firmware</span>
+      <h4>con-venience</h4>
+      <p>Arduino / PlatformIO sources, ACOM driver, page state machine, the buzzer melodies. Inline Chinese comments in places — please leave them.</p>
+      <a class="link" href="#">github.com/HuanYitiao/con-venience</a>
+    </div>
+    <div class="os-card">
+      <span class="tag">simulator</span>
+      <h4>con-venience-sim</h4>
+      <p>This document, the design system, the in-browser e-ink simulator. Iterate on pages without flashing hardware.</p>
+      <a class="link" href="#">github.com/HuanYitiao/con-venience-sim</a>
+    </div>
+  </div>
+
+  <p class="epigraph" style="margin-top:36px;">
+    Semel in anno licet insanire.
+    <span class="cite">— Erasmus · once a year, it is permitted to go a little mad</span>
+  </p>
+
+
+  <!-- ============================================================
+       COLOPHON
+  ============================================================= -->
+  <div class="colophon">
+    <div>
+      <h5>Set in</h5>
+      Silkscreen · Pixelify Sans · VT323. All SIL Open Font License 1.1.
+    </div>
+    <div>
+      <h5>Printed on</h5>
+      A 2.9" Waveshare e-ink panel, 296×128 px, 1-bit B&amp;W. Ink only. No gradients.
+    </div>
+    <div>
+      <h5>Stewarded by</h5>
+      The community, eventually. Right now: <a href="#">@HuanYitiao</a>. Pull requests welcome.
+    </div>
+  </div>
+
+  <div class="signoff">
+    Built for the furry community. &nbsp; Designed in Sweden. &nbsp; <img class="bob-icon" src="assets/avatar-bob.png" alt="">
+  </div>
+
+</main>
+
+</body>
+</html>
